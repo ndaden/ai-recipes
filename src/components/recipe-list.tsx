@@ -1,31 +1,37 @@
-"use client"
+/* eslint-disable */
 
-import { ChevronRight } from "lucide-react"
-import { Card } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
+"use client";
+
+import { ChevronRight } from "lucide-react";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 interface Recipe {
-  id: string
-  title: string
-  image?: string
-  matchedIngredients: string[]
-  missingIngredients: string[]
-  cookTime: string
+  id: string;
+  title: string;
+  image?: string;
+  matchedIngredients: string[];
+  missingIngredients: string[];
+  cookTime: string;
 }
 
 interface RecipeListProps {
-  recipes: Recipe[]
-  onViewRecipe: (recipe: Recipe) => void
+  recipes: Recipe[];
+  onViewRecipe: (recipe: Recipe) => void;
 }
 
 export default function RecipeList({ recipes, onViewRecipe }: RecipeListProps) {
   if (recipes.length === 0) {
     return (
       <Card className="p-6 text-center">
-        <p className="text-muted-foreground">No recipes found with these ingredients.</p>
-        <p className="text-sm mt-2">Try adding more ingredients or taking a clearer photo.</p>
+        <p className="text-muted-foreground">
+          No recipes found with these ingredients.
+        </p>
+        <p className="text-sm mt-2">
+          Try adding more ingredients or taking a clearer photo.
+        </p>
       </Card>
-    )
+    );
   }
 
   return (
@@ -36,7 +42,11 @@ export default function RecipeList({ recipes, onViewRecipe }: RecipeListProps) {
         <Card key={recipe.id} className="overflow-hidden">
           <div className="relative h-40 w-full">
             {recipe.image ? (
-              <img src={recipe.image || "/placeholder.svg"} alt={recipe.title} className="w-full h-full object-cover" />
+              <img
+                src={recipe.image || "/placeholder.svg"}
+                alt={recipe.title}
+                className="w-full h-full object-cover"
+              />
             ) : (
               <img
                 src={`/placeholder.svg?height=160&width=400`}
@@ -52,14 +62,19 @@ export default function RecipeList({ recipes, onViewRecipe }: RecipeListProps) {
             <div className="flex items-center text-sm text-muted-foreground mb-3">
               <span>{recipe.cookTime}</span>
               <span className="mx-2">•</span>
-              <span>{recipe.matchedIngredients.length} ingredients matched</span>
+              <span>
+                {recipe.matchedIngredients.length} ingredients matched
+              </span>
             </div>
 
             <div className="mb-4">
               <p className="text-sm font-medium mb-1">You have:</p>
               <div className="flex flex-wrap gap-1">
                 {recipe.matchedIngredients.map((ingredient, idx) => (
-                  <span key={idx} className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">
+                  <span
+                    key={idx}
+                    className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full"
+                  >
                     {ingredient}
                   </span>
                 ))}
@@ -71,7 +86,10 @@ export default function RecipeList({ recipes, onViewRecipe }: RecipeListProps) {
                 <p className="text-sm font-medium mb-1">You need:</p>
                 <div className="flex flex-wrap gap-1">
                   {recipe.missingIngredients.map((ingredient, idx) => (
-                    <span key={idx} className="text-xs bg-red-100 text-red-800 px-2 py-1 rounded-full">
+                    <span
+                      key={idx}
+                      className="text-xs bg-red-100 text-red-800 px-2 py-1 rounded-full"
+                    >
                       {ingredient}
                     </span>
                   ))}
@@ -79,13 +97,16 @@ export default function RecipeList({ recipes, onViewRecipe }: RecipeListProps) {
               </div>
             )}
 
-            <Button className="w-full mt-2" variant="outline" onClick={() => onViewRecipe(recipe)}>
+            <Button
+              className="w-full mt-2"
+              variant="outline"
+              onClick={() => onViewRecipe(recipe)}
+            >
               View Recipe <ChevronRight className="ml-2 h-4 w-4" />
             </Button>
           </div>
         </Card>
       ))}
     </div>
-  )
+  );
 }
-

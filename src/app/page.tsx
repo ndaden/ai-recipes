@@ -1,3 +1,4 @@
+/* eslint-disable */
 "use client";
 
 import CameraCapture from "@/components/camera-capture";

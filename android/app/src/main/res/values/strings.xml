@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">AI Recipes</string>
+    <string name="title_activity_main">AI Recipes</string>
+    <string name="package_name">com.airecipes.app</string>
+    <string name="custom_url_scheme">com.airecipes.app</string>
+</resources>

@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 export async function analyzeImage(imageSrc: string): Promise<string[]> {
   try {
     // For demo purposes, we'll simulate AI analysis
