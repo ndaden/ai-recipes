@@ -2,12 +2,13 @@
 "use client";
 
 import CameraCapture from "@/components/camera-capture";
-import RecipeDetail from "@/components/recipe-detail";
-import RecipeList from "@/components/recipe-list";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { analyzeImage } from "@/lib/analyze-image";
+import { useRecipesStore } from "@/stores/recipes-store";
 import { Camera, Loader2, UtensilsCrossed } from "lucide-react";
+import { useRouter } from "next/navigation";
+
 import { useState } from "react";
 
 export default function Home() {
@@ -16,8 +17,10 @@ export default function Home() {
   >("initial");
   const [image, setImage] = useState<string | null>(null);
   const [ingredients, setIngredients] = useState<string[]>([]);
-  const [recipes, setRecipes] = useState<any[]>([]);
+ // const [recipes, setRecipes] = useState<any[]>([]);
   const [selectedRecipe, setSelectedRecipe] = useState<any | null>(null);
+  const router = useRouter()
+  const {setRecipes, recipes} = useRecipesStore((state)=> state)
 
   const handleCapture = async (imageSrc: string) => {
     setImage(imageSrc);
@@ -36,7 +39,9 @@ export default function Home() {
       }).then((res) => res.json());
 
       setRecipes(recipeResults);
-      setStep("results");
+
+      console.log('recipes: ', recipes)
+      router.push('/results')
     } catch (error) {
       console.error("Error processing image:", error);
       // Handle error state
@@ -94,50 +99,7 @@ export default function Home() {
             </p>
           </Card>
         )}
-
-        {step === "results" && (
-          <div className="space-y-4">
-            <Card className="p-4">
-              <div className="flex items-center justify-between mb-2">
-                <h2 className="text-lg font-semibold">Detected Ingredients</h2>
-                <Button variant="ghost" size="sm" onClick={resetApp}>
-                  Take New Photo
-                </Button>
-              </div>
-              <div className="flex flex-wrap gap-2 mb-4">
-                {ingredients.map((ingredient, index) => (
-                  <div
-                    key={index}
-                    className="bg-secondary text-secondary-foreground px-3 py-1 rounded-full text-sm"
-                  >
-                    {ingredient}
-                  </div>
-                ))}
-              </div>
-              {image && (
-                <div className="relative w-full h-40 rounded-md overflow-hidden mb-4">
-                  <img
-                    src={image || "/placeholder.svg"}
-                    alt="Captured ingredients"
-                    className="object-cover w-full h-full"
-                  />
-                </div>
-              )}
-            </Card>
-
-            <RecipeList
-              recipes={recipes}
-              onViewRecipe={(recipe) => setSelectedRecipe(recipe)}
-            />
           </div>
-        )}
-      </div>
-      {selectedRecipe && (
-        <RecipeDetail
-          recipe={selectedRecipe}
-          onClose={() => setSelectedRecipe(null)}
-        />
-      )}
     </main>
   );
 }

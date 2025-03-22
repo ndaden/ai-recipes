@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { RecipesStoreProvider } from "@/providers/recipes-store-provider";
 
 export const metadata: Metadata = {
   title: "AI Recipes",
@@ -28,7 +29,7 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
       </head>
-      <body className="antialiased">{children}</body>
+      <body className="antialiased"><RecipesStoreProvider>{children}</RecipesStoreProvider></body>
     </html>
   );
 }
